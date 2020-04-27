@@ -39,7 +39,6 @@ func (*Service) ParseFlags(version string) (*portainer.CLIFlags, error) {
 		EndpointURL:       kingpin.Flag("host", "Endpoint URL").Short('H').String(),
 		ExternalEndpoints: kingpin.Flag("external-endpoints", "Path to a file defining available endpoints").String(),
 		NoAuth:            kingpin.Flag("no-auth", "Disable authentication").Default(defaultNoAuth).Bool(),
-		NoAnalytics:       kingpin.Flag("no-analytics", "Disable Analytics in app").Default(defaultNoAnalytics).Bool(),
 		TLS:               kingpin.Flag("tlsverify", "TLS support").Default(defaultTLS).Bool(),
 		TLSSkipVerify:     kingpin.Flag("tlsskipverify", "Disable TLS server verification").Default(defaultTLSSkipVerify).Bool(),
 		TLSCacert:         kingpin.Flag("tlscacert", "Path to the CA").Default(defaultTLSCACertPath).String(),

@@ -227,7 +227,6 @@ func loadSchedulesFromDatabase(jobScheduler portainer.JobScheduler, jobService p
 
 func initStatus(endpointManagement, snapshot bool, flags *portainer.CLIFlags) *portainer.Status {
 	return &portainer.Status{
-		Analytics:          !*flags.NoAnalytics,
 		Authentication:     !*flags.NoAuth,
 		EndpointManagement: endpointManagement,
 		Snapshot:           snapshot,
