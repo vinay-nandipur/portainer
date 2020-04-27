@@ -491,6 +491,11 @@ type (
 		AccessLevel ResourceAccessLevel `json:"AccessLevel"`
 	}
 
+	// Telemetry represents telemetry related data
+	Telemetry struct {
+		TelemetryID string `json:"TelemetryID"`
+	}
+
 	// Template represents an application template
 	Template struct {
 		// Mandatory container/stack fields
@@ -882,6 +887,12 @@ type (
 		DeleteTeamMembershipByTeamID(teamID TeamID) error
 	}
 
+	// TelemetryService represents a service for managing telemetry data
+	TelemetryService interface {
+		Telemetry() (*Telemetry, error)
+		Update(telemetry *Telemetry) error
+	}
+
 	// TunnelServerService represents a service for managing data associated to the tunnel server
 	TunnelServerService interface {
 		Info() (*TunnelServerInfo, error)
@@ -920,7 +931,7 @@ const (
 	// APIVersion is the version number of the Portainer API
 	APIVersion = "2.0.0-dev"
 	// DBVersion is the version number of the Portainer database
-	DBVersion = 23
+	DBVersion = 24
 	// AssetsServerURL represents the URL of the Portainer asset server
 	AssetsServerURL = "https://portainer-io-assets.sfo2.digitaloceanspaces.com"
 	// MessageOfTheDayURL represents the URL where Portainer MOTD message can be retrieved

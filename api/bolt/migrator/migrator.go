@@ -14,6 +14,7 @@ import (
 	"github.com/portainer/portainer/api/bolt/stack"
 	"github.com/portainer/portainer/api/bolt/tag"
 	"github.com/portainer/portainer/api/bolt/teammembership"
+	"github.com/portainer/portainer/api/bolt/telemetry"
 	"github.com/portainer/portainer/api/bolt/user"
 	"github.com/portainer/portainer/api/bolt/version"
 )
@@ -34,6 +35,7 @@ type (
 		stackService           *stack.Service
 		tagService             *tag.Service
 		teamMembershipService  *teammembership.Service
+		telemetryService       *telemetry.Service
 		userService            *user.Service
 		versionService         *version.Service
 		fileService            portainer.FileService
@@ -54,6 +56,7 @@ type (
 		StackService           *stack.Service
 		TagService             *tag.Service
 		TeamMembershipService  *teammembership.Service
+		TelemetryService       *telemetry.Service
 		UserService            *user.Service
 		VersionService         *version.Service
 		FileService            portainer.FileService
@@ -75,6 +78,7 @@ func NewMigrator(parameters *Parameters) *Migrator {
 		settingsService:        parameters.SettingsService,
 		tagService:             parameters.TagService,
 		teamMembershipService:  parameters.TeamMembershipService,
+		telemetryService:       parameters.TelemetryService,
 		stackService:           parameters.StackService,
 		userService:            parameters.UserService,
 		versionService:         parameters.VersionService,
@@ -304,6 +308,14 @@ func (m *Migrator) Migrate() error {
 	// Portainer 1.24.0
 	if m.currentDBVersion < 23 {
 		err := m.updateEndointsAndEndpointsGroupsToDBVersion23()
+		if err != nil {
+			return err
+		}
+	}
+
+	// Portainer 2.0
+	if m.currentDBVersion < 24 {
+		err := m.updateTelemetryToDB24()
 		if err != nil {
 			return err
 		}
